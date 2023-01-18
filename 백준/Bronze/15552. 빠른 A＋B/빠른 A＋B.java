@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.StringTokenizer;
+
 public class Main {
     public static void main(String[] args) throws IOException {
 
@@ -9,8 +9,9 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-            sb.append(Integer.parseInt(st.nextToken())+Integer.parseInt(st.nextToken())).append('\n');
+            String line = br.readLine();
+            int split = line.indexOf(" ");
+            sb.append(Integer.parseInt(line.substring(0, split))+Integer.parseInt(line.substring(split+1))).append('\n');
         }
         bw.write(String.valueOf(sb));
         bw.flush();
