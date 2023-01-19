@@ -16,7 +16,7 @@ public class Main {
         int n = c / today;
         if(c % today != 0) n++;
 
-        bw.write(n +"");
+        bw.write(n +""); // 숫자로 변환 편하게
         bw.flush();
         bw.close();
     }
