@@ -23,6 +23,6 @@ public class Main {
             sum += dp[n][i];
             sum = sum % 1000000000;
         }
-        System.out.println(sum%1000000000);
+        System.out.println(sum);
     }
 }
