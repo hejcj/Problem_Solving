@@ -8,26 +8,16 @@ public class Main {
         StringBuffer sb = new StringBuffer();
 
         int n = Integer.parseInt(br.readLine());
-        boolean[] count_plus = new boolean[1000001];
-        boolean[] count_minus = new boolean[1000001];
-        
+        boolean[] count = new boolean[2000001];
+
         int cnt = 0;
         for (int i = 0; i < n; i++) {
             int a = Integer.parseInt(br.readLine());
-            if(a>=0) count_plus[a] = true;
-            else count_minus[-a] = true;
+            count[a+1000000] = true;
         }
-        for(int i =count_minus.length-1; i > 0; i--){
-
-            if(count_minus[i] == true) {
-                sb.append(-i).append("\n");
-                cnt++;
-            }
-            if(cnt == n) break;
-        }
-        for (int i = 0; i < count_plus.length; i++) {
-            if(count_plus[i] == true) {
-                sb.append(i).append("\n");
+        for (int i = 0; i < count.length; i++) {
+            if(count[i] == true) {
+                sb.append(i-1000000).append("\n");
                 cnt++;
             }
             if(cnt == n) break;
