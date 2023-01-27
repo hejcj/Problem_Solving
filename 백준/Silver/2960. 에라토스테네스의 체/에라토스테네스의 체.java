@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 public class Main {
 	public static void main(String[] args) throws IOException{
 		
-		// k 번째 지워진 수
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
@@ -15,34 +14,23 @@ public class Main {
 		int count = 0;
 		
 		boolean[] arr = new boolean[n+1];
-		
-		while (count < k) {
-		
-			for(int i = 2; i <=n ; i++) {
+
+		for(int i = 2; i <=n ; i++) {		
+			
+			for(int j = i; j <= n; j +=i) {
 				
-				if(arr[i] == false) {
+				if(arr[j] == false) {
 					
-					arr[i] = true;
-					count++;
+					arr[j] = true;
+					count++;	
+					
 					if(count == k) {
-						System.out.println(i);
+						
+						System.out.println(j);
 						break;
-					}
-					
-					for(int j = i+i; j <= n; j +=i) {
-						if(arr[j] == false) {
-							arr[j] = true;
-							count++;	
-						}
-						if(count == k) {
-							System.out.println(j);
-							break;
-						}
 					}
 				}
 			}
-			
 		}
-		
 	}
 }
