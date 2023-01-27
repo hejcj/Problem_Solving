@@ -7,24 +7,15 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		StringBuffer sb = new StringBuffer();
-		boolean is_boolean = true;
 		
-		
-		while (is_boolean == true) {
-			is_boolean = false;
-			
-			for(int i = 2; i < n; i++) {
-				if(n%i == 0) {
-					sb.append(i);
-					n /= i;
-					is_boolean = true;
-					break;
-				}
-
+		for(int i = 2; i*i <= n; i++) {
+			while(n%i == 0) {
+				sb.append(i).append("\n");
+				n /= i;
 			}
-			if(is_boolean == false) sb.append(n);
-			else sb.append("\n");
 		}
-		if(n != 1) System.out.println(sb);
+		
+		if(n != 1) sb.append(n);
+		System.out.println(sb);
 	}
 }
