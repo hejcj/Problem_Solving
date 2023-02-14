@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -9,17 +10,28 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         final int N = Integer.parseInt(br.readLine());
 
-        int[] arr = new int[N];
+        Stack<Integer> stack = new Stack<>();
         long result = 0;
         for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
-        }
+            int height = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < N-1; i++) {
-            for (int j = i + 1; j < N; j++) {
-                if (arr[i] > arr[j]) {
-                    result++;
-                } else break;
+            if (stack.isEmpty()) {
+                stack.push(height);
+            } else {
+                while (true) {
+
+                    if (stack.peek() > height) {
+                        result += stack.size();
+                        stack.push(height);
+                        break;
+                    } else {
+                        stack.pop();
+                        if(stack.isEmpty()) {
+                            stack.push(height);
+                            break;
+                        }
+                    }
+                }
             }
         }
         System.out.println(result);
