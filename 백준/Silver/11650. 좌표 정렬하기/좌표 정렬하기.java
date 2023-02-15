@@ -1,42 +1,37 @@
 import java.io.*;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuffer sb = new StringBuffer();
 
         int N = Integer.parseInt(br.readLine());
-        String[] list = new String[N];
+        int[][] nums = new int[N][2];
 
         for (int i = 0; i < N; i++) {
-            list[i] = br.readLine();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            nums[i][0] = Integer.parseInt(st.nextToken());
+            nums[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(list, new Comparator<String>() {
+        Arrays.sort(nums, new Comparator<int[]>() {
             @Override
-            public int compare(String o1, String o2) {
-                String[] s1 = o1.split(" ");
-                String[] s2 = o2.split(" ");
-                int num1 = Integer.parseInt(s1[0]);
-                int num2 = Integer.parseInt(s2[0]);
+            public int compare(int[] p1, int[] p2) {
 
-                int num11 = Integer.parseInt(s1[1]);
-                int num22 = Integer.parseInt(s2[1]);
+                int com = Integer.compare(p1[0], p2[0]);
+                if (com == 0) {
 
-                if(num1 > num2) return 1;
-                else if (num1 < num2) return -1;
-                else {
-                    if(num11 > num22) return 1;
-                    else return -1;
+                    return Integer.compare(p1[1], p2[1]);
                 }
+                return com;
             }
         });
-        for (String a : list) {
-            sb.append(a).append("\n");
+        for (int[] a : nums) {
+            sb.append(a[0]).append(" ").append(a[1]).append("\n");
         }
         System.out.println(sb);
     }
