@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        
+
         final int R = 31;
         final int M = 1234567891;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,6 +14,6 @@ public class Main {
         for (int i = 0; i < n; i++) {
             sum += (s.charAt(i)-96) * Math.pow(R, i);
         }
-        System.out.println(sum%M);
+        System.out.println(sum);
     }
 }
