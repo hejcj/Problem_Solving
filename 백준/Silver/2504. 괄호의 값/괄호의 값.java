@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,60 +7,40 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
-        Stack<Integer> stack = new Stack<>();
+        Stack<Character> stack = new Stack<>();
+        int sum = 0;
+        int num = 1;
 
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            // 열린것 그대로 넣어주기 스택에
             if (c == '(') {
-                stack.push(0);
-
+                num *= 2;
+                stack.push(c);
             } else if (c == '[') {
-                stack.push(1);
-            } else {
-                int temp = 0;
-                if (c == ')') {
-                    while (!stack.isEmpty() && !(stack.peek() == 0)) {
-                        if (stack.peek() == 1) {
-                            System.out.println(0);
-                            return;
-                        }
-                        temp += stack.pop();
-                    }
-                    if (stack.isEmpty()) {
-                        System.out.println(0);
-                        return;
-                    }
-                    stack.pop();
-                    if(temp == 0) stack.push(2);
-                    else stack.push(2 * temp);
-                } else {
-                    while (!stack.isEmpty() && !(stack.peek() == 1)) {
-                        if (stack.peek() == 0) {
-                            System.out.println(0);
-                            return;
-                        }
-                        temp += stack.pop();
-                    }
-                    if (stack.isEmpty()) {
-                        System.out.println(0);
-                        return;
-                    }
-                    stack.pop();
-                    if(temp == 0) stack.push(3);
-                    else stack.push(3 * temp);
+                num *= 3;
+                stack.push(c);
+            } else if (c == ')') {
+                if (stack.isEmpty() || stack.peek() != '(') {
+                    System.out.println(0);
+                    return;
                 }
-            }
-        }
-        int result = 0;
+                if(s.charAt(i - 1) == '(') sum += num;
+                stack.pop();
+                num /= 2;
+            } else {
+                if (stack.isEmpty() || stack.peek() != '[') {
+                    System.out.println(0);
+                    return;
+                }
+                if (s.charAt(i - 1) == '[') {
 
-        for (int c : stack) {
-            if (c == 0 || c == 1) {
-                System.out.println(0);
-                return;
+                    sum += num;
+                }
+                stack.pop();
+                num /= 3;
             }
-            result += c;
         }
-        System.out.println(result);
+        if(stack.isEmpty()) System.out.println(sum);
+        else System.out.println(0);
     }
 }
