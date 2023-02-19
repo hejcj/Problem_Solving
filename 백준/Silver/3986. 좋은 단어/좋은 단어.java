@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,18 +19,10 @@ public class Main {
                     gw.push(c);
                 } else {
 
-                    if (c == 'A') {
-                        if (gw.peek() == 'A') {
-                            gw.pop();
-                        } else {
-                            gw.push(c);
-                        }
+                    if (gw.peek() == c) {
+                        gw.pop();
                     } else {
-                        if (gw.peek() == 'B') {
-                            gw.pop();
-                        } else {
-                            gw.push(c);
-                        }
+                        gw.push(c);
                     }
                 }
             }
@@ -42,4 +33,3 @@ public class Main {
         System.out.println(cnt);
     }
 }
-      
