@@ -24,9 +24,9 @@ public class Main {
     static int[][][] tomato;
 
     static int[][][] dist;
-    static int[] dx = {1, 0, -1, 0};
-    static int[] dy = {0, 1, 0, -1};
-    static int[] dz = {1, 0, -1};
+    static int[] dx = {1, 0, -1, 0, 0, 0};
+    static int[] dy = {0, 1, 0, -1, 0 ,0};
+    static int[] dz = {0, 0, 0, 0, 1, -1};
     static Queue<int[]> queue = new LinkedList<>();
 
     static void bfs() {
@@ -34,33 +34,18 @@ public class Main {
         while (!queue.isEmpty()) {
 
             int[] poll = queue.poll();
-
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 6; i++) {
+                int x = poll[1] + dx[i];
+                int y = poll[2] + dy[i];
                 int z = poll[0] + dz[i];
 
-                if(z<0 || z >= H) continue;
+                if (x < 0 || y < 0 || x >= N || y >= M || z<0 || z >= H) continue;
+                if (tomato[z][x][y] == -1 || dist[z][x][y] != -1) continue;
 
-
-                if (dz[i] == 0) {
-                    for (int j = 0; j < 4; j++) {
-                        int x = poll[1] + dx[j];
-                        int y = poll[2] + dy[j];
-
-                        if (x < 0 || y < 0 || x >= N || y >= M) continue;
-                        if (tomato[z][x][y] == -1 || dist[z][x][y] != -1) continue;
-
-                        dist[z][x][y] = dist[poll[0]][poll[1]][poll[2]] + 1;
-                        queue.offer(new int[]{z, x, y});
-                    }
-                } else {
-                    if (tomato[z][poll[1]][poll[2]] != -1 && dist[z][poll[1]][poll[2]] == -1) {
-                        dist[z][poll[1]][poll[2]] = dist[poll[0]][poll[1]][poll[2]] + 1;
-                        queue.offer(new int[]{z, poll[1], poll[2]});
-                    }
-                }
+                dist[z][x][y] = dist[poll[0]][poll[1]][poll[2]] + 1;
+                queue.offer(new int[]{z, x, y});
             }
         }
-
     }
 
     public static void main(String[] args) throws IOException {
