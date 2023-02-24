@@ -16,13 +16,12 @@ public class Main {
         // 모눈종이 배열
         boolean[][] graphPaper = new boolean[101][101];
         // 방문 여부 배열
-        boolean[][] vis = new boolean[101][101];
 
         // cnt, 각 넓이 변수
         int cnt = 0;
         int w = 0;
         // 넓이를 담을 배열 카운트 정렬로
-        int[] result = new int[102020];
+        int[] result = new int[10001];
 
         // bfs 수행할 queue
         Queue<int[]> queue = new LinkedList<>();
@@ -55,7 +54,6 @@ public class Main {
             for (int k = 0; k < M; k++) {
                 if (!graphPaper[j][k]) {
                     queue.offer(new int[]{j, k});
-                    vis[j][k] = true;
                     graphPaper[j][k] = true;
                     cnt++;
                     w = 1;
@@ -66,8 +64,7 @@ public class Main {
                             int y = poll[1] + dy[l];
 
                             if(x< 0 || y < 0 || x >= N || y >= M) continue;
-                            if(graphPaper[x][y] || vis[x][y]) continue;
-                            vis[x][y] = true;
+                            if(graphPaper[x][y]) continue;
                             graphPaper[x][y] = true;
                             w++;
                             queue.offer(new int[]{x, y});
