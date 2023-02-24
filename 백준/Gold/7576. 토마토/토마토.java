@@ -1,88 +1,123 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class Main {
-    // 창고에 보관되는 토마토 중 잘 익지 않은 것
-    // 익은 토마토 가로세로 영향
-    // 검사
-    // 토마토가 다 익어 있다면 0
-    // 토마토가 익지 못하는 상황 -1
-    // 토마토가 익지 못하는 상황이면
-    // 익은 토마토가 영향을 끼치는 숫자가 0
-    // 익은 토마토 숫자가 변화가 없으면
-    // 토마토가 익지 못하는 것
+    // 행과 열의 길이
+    static int N, M;
 
-    // 1번째 수행 때 완전탐색
-    // 토마토 변화 가로 세로
-    // 두 번째 가로 세로
-    // 완전 탐색해서 큐에다가 미리 다 넣어두고 시작
-    // {좌표, 며칠걸렸는지}
-    // 큐가 다 비워졌는데, 익은 토마토 숫자가 == 맞지 않으면
-    // return -1
+    // 농장 배열
+    static int[][] farm;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+    // 방문 여부를 기록하는 boolean 배열
+    static boolean[][] visited;
 
-        int M = Integer.parseInt(st.nextToken());
-        int N = Integer.parseInt(st.nextToken());
+    // 델타탐색을 위한 델타배열
+    static int[][] delta = {{-1,0}, {1,0}, {0,-1}, {0,1}};
 
-        // 토마토 배열
-        int[][] tomato = new int[N][M];
-        // 가로세로 이동 dx dy 배열
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
-        // 큐에
-        Queue<int[]> queue = new LinkedList<>();
-        int max = 0;
-        int cnt = 0;
-        int all = M * N;
-        // 배열입력
-        for (int i = 0; i < N; i++) {
-            StringTokenizer st2 = new StringTokenizer(br.readLine());
-            for (int j = 0; j < M; j++) {
-                // 배열에서 토마토면 큐에 좌표 값 입력, 날짜배열에 0 입력 토마토 cnt ++;
-                String s = st2.nextToken();
-                if (s.equals("1")) {
-                    tomato[i][j] = 1;
-                    queue.offer(new int[]{i, j, 0});
-                    cnt++;
-                } else if (s.equals("-1")) {
-                    tomato[i][j] = -1;
-                    all--;
-                }
+    // BFS를 위한 Queue
+    static Queue<int[]> queue;
 
-            }
-        }
 
-        // 큐가 비워질 때 까지 반복
+    // BFS 알고리즘
+    static void BFS() {
+        // 방문여부 초기화
+
+
+        // queue가 빌 때까지
         while (!queue.isEmpty()) {
 
-            // 좌표 빼고, dx,dy 이동 반복문
-            int[] poll = queue.poll();
-            for (int i = 0; i < 4; i++) {
-                int x = poll[0] + dx[i];
-                int y = poll[1] + dy[i];
-                // 인덱스 이내에 있고, 날짜 -1 이고, 안익은 토마토라면
-                if(x <0 || x >=N || y <0 || y >= M) continue;
-                if(tomato[x][y] != 0) continue;
-                // 토마토 익은 거로 바꾸고 큐에 넣기 날짜 +1 토마토 cnt ++
-                queue.offer(new int[]{x, y, poll[2] + 1});
-                tomato[x][y] = 1;
-                cnt++;
-                // max 보다 날짜가 크면 max 바꿔주기
-                max = Math.max(poll[2] + 1, max);
+            // 기준좌표 queue에서 받아오기
+            int[] cur = queue.poll();
+
+            // 방문표시
+
+            // 델타순회
+            for (int dt = 0; dt < 4; dt++) {
+
+                // 현재 값을 기준으로 상하좌우 좌표 접근
+                int nr = cur[0] + delta[dt][0];
+                int nc = cur[1] + delta[dt][1];
+
+                // 만약 index를 넘어가고 아무것도 없는 땅이거나 방문했으면 스킵
+                if (nr >= N || nc >= M || nr < 0 || nc < 0) continue;
+                if (farm[nr][nc] == -1 || visited[nr][nc]) continue;
+
+                // 다음에 순회할 좌표 큐에 추가
+                queue.offer(new int[] {nr, nc});
+
+                // 방문표시
+                visited[nr][nc] = true;
+
+                // 아직 방문하지 않은 안익은 토마토만 남았으므로 만날 때마다 익는데까지 걸리는 시간을 표시하면 된다
+                // 익는데 걸리는 시간 = {cur[0], [cur[1]} 의 시간 + 1
+                farm[nr][nc] = farm[cur[0]][cur[1]] + 1;
+
             }
         }
 
-        if (all == cnt) {
-            System.out.println(max);
-        } else System.out.println(-1);
-        // M*N == cnt return max
-        // else return -1
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        // 농장 크기 입력
+        M = input.nextInt();
+        N = input.nextInt();
+
+        // 배열 크기 지정
+        farm = new int[N][M];
+        visited = new boolean[N][M];
+
+        // 좌표를 담을 Queue 생성
+        queue = new LinkedList<>();
+
+        // 특수상태를 체크하는 bool 변수
+        boolean allRipen = true;
+
+        // 토마토 농장 상태 입력
+        for (int r = 0; r < N; r++){
+            for (int c = 0; c < M; c++) {
+
+                farm[r][c] = input.nextInt();
+
+                // 하나라도 안 익은게 들어오면 모든 토마토가 익은 건 아니니까
+                if (farm[r][c] == 0) allRipen = false;
+
+                // 확인한 값이 1(이미 익은 토마토)면 큐에 등록
+                if (farm[r][c] == 1) {
+                    visited[r][c] = true;
+                    queue.offer(new int[]{r, c});
+                }
+            }
+        }
+
+        // BFS on
+        BFS();
+
+        // 안익은게 있으면 체크
+        boolean notRipen = false;
+
+        // 배열 내 최댓값으로 다 익기까지 얼마나 걸리는지 확인
+        int answer = 0;
+
+        // 다 돌고 나서 순회하면서 안익은 토마토가 있는지 체크
+        for (int r = 0; r < N; r++) {
+            for (int c = 0; c < M; c++) {
+                // 만약 안익은 토마토가 있으면 bool값 변경
+                if (farm[r][c] == 0) notRipen = true;
+
+                // 다 익기까지 걸리는 시간 갱신
+                if (farm[r][c] > answer) answer = farm[r][c];
+            }
+        }
+
+        // 만약 시작부터 다 익었으면 확인해볼 필요 없으니까 바로 0 출력
+        if (allRipen) System.out.println(0);
+            // 모든 토마토가 다 익지 않는 경우면 -1 출력
+        else if (notRipen) System.out.println(-1);
+            // 정상적인 경우면 배열이 익기까지 최소날짜 출력, 익은 토마토의 값인 1에서 시작됐으므로 일수는 -1
+        else System.out.println(answer - 1);
+
     }
 }
