@@ -17,15 +17,13 @@ public class Main {
         // 5 17 -> 10 15
         // 어디까지? 배열의 크기를 지정해야 하는지가 관건
 
-
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        int[] time = new int[200001];
+        int[] time = new int[100001];
         Arrays.fill(time,-1);
 
         Queue<Integer> q = new LinkedList<>();
