@@ -20,8 +20,6 @@ public class Main {
         for (int i = 2; i <= Math.sqrt(s.length()); i++) {
             if (s.length() % i == 0) R = i;
         }
-
-        R = Math.min(R, s.length() / R);
         StringBuilder sb = new StringBuilder();
 
 
