@@ -22,9 +22,10 @@ public class Main {
 
     // 색종이를 붙일 수 있는지 여부 판단 메소드
     static boolean isOk(int x, int y, int n) {
+        if(x+n > 10 || y+n > 10) return false;
         for (int i = x; i < x + n; i++) {
             for (int j = y; j < y + n; j++) {
-                if (i >= 10 || j >= 10 || !map[i][j]) return false;
+                if (!map[i][j]) return false;
             }
         }
         return true;
