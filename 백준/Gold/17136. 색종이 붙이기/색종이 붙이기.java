@@ -37,6 +37,9 @@ public class Main {
     }
 
     static void dfs(int n, int cnt) {
+
+        if (cnt > min) return;
+
         if (n == 100) {
             if (aa == 0) {
                 min = Math.min(min, cnt);
