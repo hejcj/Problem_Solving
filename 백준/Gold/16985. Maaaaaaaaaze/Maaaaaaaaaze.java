@@ -64,6 +64,7 @@ public class Main {
                     return;
                 }
             }
+            if(poll.time == min) return;
             for (int i = 0; i < 6; i++) {
                 int z = poll.n + dz[i];
                 int x = poll.x + dx[i];
@@ -95,36 +96,7 @@ public class Main {
             if (nMap[0][0][0] == 1) {
                 go(0, 0, 0);
             }
-            // 오른쪽위
-            if (nMap[0][0][4] == 1) {
-                go(0, 0, 4);
-            }
-            // 왼쪽 아래
-            if (nMap[0][4][0] == 1) {
-                go(0, 4, 0);
-            }
-            // 오른쪽 아래
-            if (nMap[0][4][4] == 1) {
-                go(0, 4, 4);
-            }
-            // 마지막 면에서 시작 꼭짓점 찾기
-            // 왼쪽 위 오른쪽 위 왼쪽 아래 오른쪽 아래
-            // 왼쪽위
-            if (nMap[4][0][0] == 1) {
-                go(4, 0, 0);
-            }
-            // 오른쪽위
-            if (nMap[4][0][4] == 1) {
-                go(4, 0, 4);
-            }
-            // 왼쪽 아래
-            if (nMap[4][4][0] == 1) {
-                go(4, 4, 0);
-            }
-            // 오른쪽 아래
-            if (nMap[4][4][4] == 1) {
-                go(4, 4, 4);
-            }
+
         }
         for (int i = 0; i < 5; i++) {
             if (vc[i]) continue;
