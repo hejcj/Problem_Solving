@@ -9,27 +9,12 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         StringBuilder sb = new StringBuilder();
-        int temp = 0;
-        int max = Integer.parseInt(st.nextToken());
-        int mid = Integer.parseInt(st.nextToken());
-
-        if (mid > max) {
-            temp = max;
-            max = mid;
-            mid = temp;
-        }
-        int min = Integer.parseInt(st.nextToken());
-        if (min > mid) {
-            temp = mid;
-            mid = min;
-            min = temp;
-            if(mid > max) {
-                temp = max;
-                max = mid;
-                mid = temp;
-            }
-        }
-
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+        int c = Integer.parseInt(st.nextToken());
+        int max = Math.max(a, Math.max(b, c));
+        int min = Math.min(a, Math.min(b, c));
+        int mid = a + b + c - max - min;
         sb.append(min).append(" ").append(mid).append(" ").append(max);
         System.out.println(sb);
     }
