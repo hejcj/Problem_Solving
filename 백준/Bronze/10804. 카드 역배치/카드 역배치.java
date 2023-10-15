@@ -7,13 +7,11 @@ public class Main {
     public static int[] arr = new int[21];
 
     public static void swap(int start, int end) {
-        int[] arr2 = new int[21];
-        for (int i = start; i <= end; i++) {
-            arr2[i] = arr[i];
-        }
 
-        for (int i = start; i <= end; i++) {
-            arr[i] = arr2[end + start - i];
+        for (int i = start; i <= ( end + start ) / 2; i++) {
+            int n = arr[i];
+            arr[i] = arr[end + start - i];
+            arr[end + start - i] = n;
         }
     }
 
