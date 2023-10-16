@@ -5,16 +5,17 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int max = 0;
-        int cnt = 0;
-        for (int i = 1; i <= 9; i++) {
-            int a = Integer.parseInt(br.readLine());
-            if ( a > max) {
-                max = a;
-                cnt = i;
+        StringBuilder sb = new StringBuilder();
+        int max = Integer.parseInt(br.readLine());
+        int idx = 1;
+        for (int i = 2; i < 10; i++) {
+            int n = Integer.parseInt(br.readLine());
+            if(n > max) {
+                max = n;
+                idx = i;
             }
         }
-        System.out.println(max);
-        System.out.println(cnt);
+        sb.append(max).append("\n").append(idx);
+        System.out.println(sb);
     }
 }
