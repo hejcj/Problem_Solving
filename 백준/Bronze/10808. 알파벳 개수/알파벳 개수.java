@@ -5,14 +5,17 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s = br.readLine();
-        int[] is= new int[26];
+        StringBuilder sb = new StringBuilder();
+        int[] arr = new int[26];
 
-        for (int i = 0; i < s.length(); i++) {
-            is[s.charAt(i)-97]++;
+        String s = br.readLine();
+        for (char c : s.toCharArray()) {
+            arr[c - 'a']++;
         }
-        for (int i : is) {
-            System.out.printf("%d ", i);
+
+        for (int n : arr) {
+            sb.append(n).append(" ");
         }
+        System.out.println(sb);
     }
 }
