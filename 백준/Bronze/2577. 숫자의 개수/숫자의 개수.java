@@ -1,25 +1,20 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int a = Integer.parseInt(br.readLine());
-        int b = Integer.parseInt(br.readLine());
-        int c = Integer.parseInt(br.readLine());
-
-        int[] num = new int[10];
-
-        int multiple = a*b*c;
-        while(multiple != 0){
-            num[multiple%10]++;
-            multiple /= 10;
+        StringBuilder sb = new StringBuilder();
+        int target = Integer.parseInt(br.readLine()) * Integer.parseInt(br.readLine()) * Integer.parseInt(br.readLine());
+        int[] arr = new int[10];
+        while (target > 0) {
+            arr[target % 10]++;
+            target /= 10;
         }
-        for (int i : num) {
-            bw.write(Integer.toString(i));
-            bw.write("\n");
+        for (int n : arr) {
+            sb.append(n).append("\n");
         }
-        bw.flush();
-        bw.close();
+        System.out.println(sb);
     }
 }
