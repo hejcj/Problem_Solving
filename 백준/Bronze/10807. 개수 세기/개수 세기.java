@@ -7,11 +7,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[201];
+        int cnt = 0;
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int X = Integer.parseInt(br.readLine());
         for (int i = 0; i < N; i++) {
-            arr[Integer.parseInt(st.nextToken()) + 100]++;
+            if(Integer.parseInt(st.nextToken()) == X) cnt++;
         }
-        System.out.println(arr[Integer.parseInt(br.readLine())+100]);
+        System.out.println(cnt);
     }
 }
