@@ -1,34 +1,40 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ListIterator;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s = br.readLine();
-        String[] s1 = s.split(" ");
-        int n = Integer.parseInt(s1[0]);
-        int k = Integer.parseInt(s1[1]);
-
-        ArrayList<Integer> list = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
-            list.add(i + 1);
-        }
         StringBuilder sb = new StringBuilder();
         sb.append("<");
-        int index = 0;
-        while (!list.isEmpty()) {
-            index = (index + (k - 1)) % list.size();
-            sb.append(list.remove(index));
-            if (list.size() == 0) {
-                sb.append(">");
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        LinkedList<Integer> list = new LinkedList<>();
+        int N = Integer.parseInt(st.nextToken());
+        for (int i = 1; i <= N; i++) {
+            list.add(i);
+        }
+        ListIterator<Integer> listIterator = list.listIterator();
+        int K = Integer.parseInt(st.nextToken());
+        int idx = 0;
+        while (list.size() > 1) {
+            idx++;
+            if(idx % K  == 0) {
+                if(!listIterator.hasNext())
+                    listIterator = list.listIterator();
+                sb.append(listIterator.next()).append(", ");
+                listIterator.previous();
+                listIterator.remove();
             } else {
-                sb.append(", ");
+                if(!listIterator.hasNext())
+                    listIterator = list.listIterator();
+                listIterator.next();
             }
         }
+
+        sb.append(list.peekFirst()).append(">");
         System.out.println(sb);
     }
 }
