@@ -4,64 +4,33 @@ import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-/*
-    정수 저장 스택 구현
-    명령 처리
-    명령 처리 스위치문으로 처리
-    or 함수
- */
-
 public class Main {
     public static void main(String[] args) throws IOException {
-
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        // 정수 저장 자료구조 스택
+        int N = Integer.parseInt(br.readLine());
         Stack<Integer> stack = new Stack<>();
-
-        // 명령의 수
-        int n = Integer.parseInt(br.readLine());
-        
-        // 출력
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < n; i++) {
+        while (N-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            String command = st.nextToken();
-            switch (command) {
-                case "push":
-                    stack.push(Integer.parseInt(st.nextToken()));
-                    break;
-
-                case "top":
-                    if (stack.isEmpty()) sb.append("-1").append("\n");
-                    else sb.append(stack.peek()).append("\n");
-                    break;
-
-                case "pop":
-                    if(stack.isEmpty()) sb.append("-1").append("\n");
-                    else sb.append(stack.pop()).append("\n");
-                    break;
-
-                case "size" :
-                    sb.append(stack.size()).append("\n");
-                    break;
-
-                case "empty":
-                    if (stack.isEmpty()) {
-                        sb.append("1").append("\n");
-                    } else {
-                        sb.append("0").append("\n");
-                    }
-                    break;
-
-                default : break;
+            String s = st.nextToken();
+            if("push".equals(s)) {
+                stack.push(Integer.parseInt(st.nextToken()));
+            } else if ("pop".equals(s)) {
+                if(!stack.isEmpty()) sb.append(stack.pop());
+                else sb.append("-1");
+            } else if ("size".equals(s)) {
+                sb.append(stack.size());
+            } else if ("empty".equals(s)) {
+                if(stack.isEmpty()) sb.append("1");
+                else sb.append("0");
+            } else if ("top".equals(s)) {
+                if(stack.isEmpty()) sb.append("-1");
+                else sb.append(stack.peek());
             }
 
+            if(!"push".equals(s)) sb.append("\n");
         }
-
         System.out.println(sb);
-
     }
 }
