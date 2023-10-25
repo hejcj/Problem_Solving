@@ -5,24 +5,18 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        Stack<Integer> money = new Stack<>();
         int result = 0;
-        for (int i = 0; i < n; i++) {
-            int num = Integer.parseInt(br.readLine());
-            if(num == 0) money.pop();
-            else {
-                money.push(num);
+
+        int K = Integer.parseInt(br.readLine());
+        Stack<Integer> stack = new Stack<>();
+        while(K-- > 0) {
+            int n = Integer.parseInt(br.readLine());
+            if(n==0) result -= stack.pop();
+            else  {
+                result += stack.push(n);
             }
         }
-
-        for (int i : money) {
-            result += i;
-        }
-
         System.out.println(result);
-
     }
 }
