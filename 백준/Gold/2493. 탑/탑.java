@@ -5,44 +5,37 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
+    public static class Node {
+        int data;
+        int index;
+
+        public Node(int data, int index) {
+            this.data = data;
+            this.index = index;
+        }
+    }
     public static void main(String[] args) throws IOException {
-        // stack
+        // 하나의 탑에서 발사된 레이저 신호는 가장 먼저 만나는 단 하느이 탑에서만 수신이 가능하다.
 
-        // 새로운 숫자와 이전에 있던 숫자 비교
-
-        // 새로운 숫자가 이전에 있던 숫자보다 작으면 스택에 쌓인다.
-
-        // 새로운 숫자가 이전에 있던 숫자보다 크면 스택을 pop 한다.
-
+        // 각각의 탑에서 발사한 레이저 신호를 어느탑에서 수신하는지를 알아내는 프로그램을 작성하라
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        Stack<Integer> stack = new Stack<>();
-        Stack<Integer> index = new Stack<>();
+        int N = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < n; i++) {
-            int num = Integer.parseInt(st.nextToken());
-
-            if (stack.isEmpty()) {
-                sb.append("0 ");
-                stack.push(num);
-                index.push(i + 1);
-            } else {
-                while (num > stack.peek()) {
-                    stack.pop();
-                    index.pop();
-                    if(stack.isEmpty()) break;
-                }
-
-                if(stack.isEmpty()) sb.append("0 ");
-                else sb.append(index.peek()).append(" ");
-                stack.push(num);
-                index.push(i + 1);
+        Stack<Node> stack = new Stack<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= N; i++) {
+            int n = Integer.parseInt(st.nextToken());
+            while (!stack.isEmpty() && stack.peek().data < n) {
+                stack.pop();
             }
+            if(!stack.isEmpty()) {
+                sb.append(stack.peek().index).append(" ");
+            } else {
+                sb.append("0 ");
+            }
+            stack.push(new Node(n,i));
         }
         System.out.println(sb);
-
     }
 }
