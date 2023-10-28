@@ -5,34 +5,17 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        final int N = Integer.parseInt(br.readLine());
-
-        Stack<Integer> stack = new Stack<>();
         long result = 0;
-        for (int i = 0; i < N; i++) {
-            int height = Integer.parseInt(br.readLine());
-
-            if (stack.isEmpty()) {
-                stack.push(height);
-            } else {
-                while (true) {
-
-                    if (stack.peek() > height) {
-                        result += stack.size();
-                        stack.push(height);
-                        break;
-                    } else {
-                        stack.pop();
-                        if(stack.isEmpty()) {
-                            stack.push(height);
-                            break;
-                        }
-                    }
-                }
+        int N = Integer.parseInt(br.readLine());
+        Stack<Integer> stack = new Stack<>();
+        while (N-- > 0) {
+            int h = Integer.parseInt(br.readLine());
+            while (!stack.isEmpty() && stack.peek() <= h) {
+                stack.pop();
             }
+            result += stack.size();
+            stack.push(h);
         }
         System.out.println(result);
     }
