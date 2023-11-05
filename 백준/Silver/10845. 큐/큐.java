@@ -1,84 +1,83 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static final int MX = 10001;
-    public static int[] queue = new int[MX];
+    public static class Queue {
+        int[] arr;
+        int front;
+        int back;
 
-    public static int head = 0, tail = 0;
+        public Queue() {
+            int front = 0;
+            int back = 0;
+            this.arr = new int[100000];
+        }
+        public void push(int n) {
+            arr[back++] = n;
+        }
+        public int pop() {
+            if(empty() == 1) return -1;
+            return arr[front++];
+        }
 
-    public static void push(int x) {
-        queue[tail++] = x;
-    }
+        public int empty() {
+            if(size() == 0) return 1;
+            return 0;
+        }
 
-    public static void  pop() {
-        head++;
-    }
+        public int size() {
+            return back-front;
+        }
+        public int front() {
+            if(empty() == 1) return -1;
+            return arr[front];
+        }
 
-    public static int front() {
-
-        return queue[head];
-    }
-
-    public static int back() {
-
-        return queue[tail-1];
+        public int back() {
+            if(empty() == 1) return -1;
+            return arr[back-1];
+        }
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        final int N = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < N; i++) {
+        int N = Integer.parseInt(br.readLine());
+        Queue queue = new Queue();
+        int data = 0;
+        while (N-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-
-            switch (st.nextToken()) {
-
-                case "push":
-                    push(Integer.parseInt(st.nextToken()));
+            String cmd = st.nextToken();
+            if(st.hasMoreTokens()) {
+                data = Integer.parseInt(st.nextToken());
+            }
+            switch (cmd) {
+                case "push" :
+                    queue.push(data);
                     break;
-
                 case "pop" :
-                    if (head == tail) {
-                        sb.append("-1");
-                    } else {
-                        sb.append(front());
-                        pop();
-                    }
-                    sb.append("\n");
+                    sb.append(queue.pop()).append("\n");
                     break;
-
                 case "size" :
-                    sb.append(tail - head).append("\n");
+                    sb.append(queue.size()).append("\n");
                     break;
-
-                case "empty":
-                    if(tail-head  == 0) sb.append("1");
-                    else sb.append("0");
-                    sb.append("\n");
+                case "empty" :
+                    sb.append(queue.empty()).append("\n");
                     break;
-
-                case "front":
-
-                    if (tail == head) sb.append("-1");
-                    else sb.append(front());
-                    sb.append("\n");
+                case "front" :
+                    sb.append(queue.front()).append("\n");
                     break;
-
-                case "back":
-                    if(tail == head) sb.append("-1");
-                    else sb.append(back());
-                    sb.append("\n");
-
+                case "back" :
+                    sb.append(queue.back()).append("\n");
                     break;
                 default:
                     break;
             }
+
         }
         System.out.println(sb);
     }
